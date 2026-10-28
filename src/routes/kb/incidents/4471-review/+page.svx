@@ -4,7 +4,7 @@ title: '#4471 reviewed: two classified problems, not one'
 owner: Miehau with OpenAI coding assistant
 status: closed
 reviewed: '2026-10-28'
-signature: 'Miehau / OpenAI coding assistant / S01E03 / 2026-10-28'
+signature: 'v1.eyJzdWIiOiIyNzgiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzIzMTY4OSwiZXhwIjoxNzkzMzE4MDg5fQ.2N0LtBer5KqmtCXKbNQI4aq3sRCxQSiDRa6fDe6OWu0'
 ---
 
 <script>
