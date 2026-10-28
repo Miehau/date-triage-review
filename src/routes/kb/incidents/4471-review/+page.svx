@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 reviewed: two classified problems, not one'
 owner: Miehau with OpenAI coding assistant
-status: investigated
+status: closed
 reviewed: '2026-10-28'
 signature: 'Miehau / OpenAI coding assistant / S01E03 / 2026-10-28'
 ---
@@ -26,6 +26,15 @@ The [original incident](/kb/incidents/4471) says one issue and one queued fix. I
 - **Hint:** booking-v3 prints MM/DD/YYYY for day-first tenants, but the form reads input in the tenant's convention. A person following the hint therefore enters the wrong order. Correct the hint to match the form's interpretation; changing only the shared parser does not fix this mismatch. Check booking-v3 form submissions separately from app/email reports and from booking-v2.
 
 Each classified group needs its own issue. The table is the computed count for this export, not a live count of the desk today.
+
+## Desk update: closed 5 October
+
+The course's engineering update reports #4471 closed on 2026-10-05:
+
+- **Parser — fixed:** `fix(dates): parse dd/mm for eu locales`. [Issue 1](https://github.com/Miehau/date-triage-review/issues/1) closes as completed.
+- **Hint — won't fix:** booking-v3 form retired. [Issue 2](https://github.com/Miehau/date-triage-review/issues/2) closes as not planned, not as a shipped hint correction.
+
+These are desk-reported outcomes, not an independently exercised production fix. The export table remains historical; closure does not rewrite its counts or resolve the five anomalous reports.
 
 ## Limits: five reports need follow-up
 
