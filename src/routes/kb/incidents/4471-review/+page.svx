@@ -1,0 +1,50 @@
+---
+layout: runbook
+title: '#4471 reviewed: two classified problems, not one'
+owner: Miehau with OpenAI coding assistant
+status: investigated
+reviewed: '2026-10-28'
+signature: 'Miehau / OpenAI coding assistant / S01E03 / 2026-10-28'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## What the evidence shows
+
+The [original incident](/kb/incidents/4471) says one issue and one queued fix. Its own computed table contradicts that claim. The export contains overlapping pages: count report IDs once, not rows. Classify using the tenant's locale and booking form, not the browser locale or intake tag.
+
+<CauseTable ticket={4471} />
+
+## Separate engineering work
+
+- **Parser:** the shared parser reads dates month first for day-first tenants. For example, R-41200 reports a 7 April reminder on 4 July. Correct the parser's date interpretation using the tenant's date convention. Check both app and email paths and ambiguous day/month input.
+- **Hint:** booking-v3 prints MM/DD/YYYY for day-first tenants, but the form reads input in the tenant's convention. A person following the hint therefore enters the wrong order. Correct the hint to match the form's interpretation; changing only the shared parser does not fix this mismatch. Check booking-v3 form submissions separately from app/email reports and from booking-v2.
+
+Each classified group needs its own issue. The table is the computed count for this export, not a live count of the desk today.
+
+## Limits: five reports need follow-up
+
+The tenant/channel classifier places R-41202, R-41209, R-41236, R-41344, and R-41620 under parser. Their bodies describe a one-day move, June-only offsets, delivery before booking, or differences between Lisbon and Toronto. The classifier does not establish their root cause. Keep these IDs visible within the parser count and investigate raw booking, timezone, and delivery evidence before asserting a third cause or subtracting them from the classified total. Do not silently relabel them as confirmed month/day swaps.
+
+## What the timeline measures
+
+<QueueTimeline ticket={4471} />
+
+The bars distinguish receipt time from merge time. A merge spike is desk activity, not necessarily a spike in new failures. The chart ends at the export boundary and cannot prove the current queue is stable or fixed.
+
+## Replace the triage rule, not its history
+
+The [accepted decision 0001](/kb/decisions/0001-dedupe-by-subject) and [triage page](/kb/triage/dedupe) tell the desk to merge matching subjects. The running demonstration instead compares causes. Matching words are not evidence of a shared cause; different words can describe the same cause. Preserve the accepted record unchanged and propose a new decision superseding subject-only merging with tenant/form/channel evidence and explicit review of unmatched symptoms.
+
+<DedupeExplorer />
+
+## Scope and provenance
+
+This review uses the support-kb export dated 2026-10-04: reports-4471.json, the tenant directory, desk-notes.json, causes.ts, and the existing computed components. The desk continues to work. Refresh its evidence before treating this snapshot as current. No fix has been deployed or verified by this review.
+
+<RenderStamp {signature} />
